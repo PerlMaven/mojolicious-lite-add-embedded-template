@@ -1,10 +1,15 @@
 use Mojolicious::Lite;
 
-get '/' => { text => 'Hello World' };
+plugin 'DefaultHelpers';
+
+get '/' => sub {
+    my $self = shift;
+    $self->render('index', msg => 'Hello World');
+} => 'index';
 
 get '/echo' => sub {
     my $self = shift;
-    $self->render('echo', msg => undef);
+    $self->render('echo');
 };
 
 post '/echo' => sub {
@@ -19,6 +24,7 @@ app->start;
 __DATA__
 
 @@ echo.html.ep
+% use vars '$msg';
 
 What are you looking for?
 <form method="POST"><input name="q"><input type="submit" value="Echo"></form>
@@ -27,3 +33,10 @@ What are you looking for?
    You typed: <%= $msg %>
 % }
 
+<p><a href="<%= url_for 'index' %>">Index</a></p>
+
+@@ index.html.ep
+
+<h1><%= $msg %></h1>
+
+<p><a href="<%= url_for 'echo' %>">Echo</a></p>

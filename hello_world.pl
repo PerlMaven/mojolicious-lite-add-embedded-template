@@ -24,12 +24,13 @@ app->start;
 __DATA__
 
 @@ echo.html.ep
+% use vars '$msg';
 
 What are you looking for?
 <form method="POST"><input name="q"><input type="submit" value="Echo"></form>
 
-% if (defined stash('msg')) {
-   You typed: <%= stash 'msg' %>
+% if (defined $msg) {
+   You typed: <%= $msg %>
 % }
 
 <p><a href="<%= url_for 'index' %>">Index</a></p>

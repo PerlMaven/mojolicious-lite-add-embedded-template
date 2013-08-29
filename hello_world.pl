@@ -4,7 +4,7 @@ get '/' => { text => 'Hello World' };
 
 get '/echo' => sub {
     my $self = shift;
-    $self->render('echo', msg => undef);
+    $self->render('echo');
 };
 
 post '/echo' => sub {
@@ -23,7 +23,7 @@ __DATA__
 What are you looking for?
 <form method="POST"><input name="q"><input type="submit" value="Echo"></form>
 
-% if (defined $msg) {
-   You typed: <%= $msg %>
+% if (defined stash('msg')) {
+   You typed: <%= stash 'msg' %>
 % }
 

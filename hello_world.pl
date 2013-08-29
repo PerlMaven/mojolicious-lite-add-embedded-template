@@ -1,6 +1,11 @@
 use Mojolicious::Lite;
 
-get '/' => { text => 'Hello World' };
+plugin 'DefaultHelpers';
+
+get '/' => sub {
+    my $self = shift;
+    $self->render('index', msg => 'Hello World');
+} => 'index';
 
 get '/echo' => sub {
     my $self = shift;
@@ -27,3 +32,10 @@ What are you looking for?
    You typed: <%= stash 'msg' %>
 % }
 
+<p><a href="<%= url_for 'index' %>">Index</a></p>
+
+@@ index.html.ep
+
+<h1><%= $msg %></h1>
+
+<p><a href="<%= url_for 'echo' %>">Echo</a></p>
